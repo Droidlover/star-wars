@@ -1,0 +1,26 @@
+<div class=container>
+  <div>
+    <button type="button" (click)="logout()" class="btn btn-danger">Logout</button>
+  </div>
+  <div class=row>
+    <div class="col-sm-12">
+      <input type="text" [(ngModel)]="searchText" (keyup)="search()" class="form-control mt-2"
+        placeholder="Please type here to search">
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-sm-12">
+      <div *ngFor="let planet of filteredPlanets; let i = index">
+        <p [ngStyle]="{'font-size': getFontSize(planet,i)}" (click)="showDetails(i)" class="pointer">
+          {{planet.name}}</p>
+        <div *ngIf="visibaleDetailsElement === i">
+          <span class="d-block h2">Name : {{planet.name}}</span>
+          <span class="d-block h5">Diameter : {{planet.diameter}}</span>
+          <span class="d-block h5">Population :{{planet.population}}</span>
+          <span class="d-block h5">Terrain : {{planet.terrain}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p *ngIf="isLoading">Loading...</p>
+</div>
