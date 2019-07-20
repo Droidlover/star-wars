@@ -10,13 +10,18 @@ import { Router } from '@angular/router';
 export class StarWarsService {
 
   private isUserLoggedIn = false;
-  numOfSearched;
-  timer: Observable<null>
+  numOfSearched = 0;
+  timer: Observable<number>;
+  timerSubs;
+  loggedInUser;
   constructor(
     private http: HttpClient,
     private router: Router
   ) {
-    this.timer = Observable.interval(1000);
+    this.timer = interval(60000);
+    this.timerSubs = this.timer.subscribe((val) => {
+      this.numOfSearched = 0;
+    });
   }
 
 

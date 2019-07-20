@@ -57,14 +57,15 @@ export class LoginComponent implements OnInit {
       if (ele.name === this.loginForm.value.userName) {
         if (this.loginForm.value.password === ele.birth_year) {
           console.log('loggedIn');
-          this.setLoggedInUserAndRedirect();
+          this.setLoggedInUserAndRedirect(ele);
           return true;
         }
       }
     });
     return loggedInUser[0];
   }
-  setLoggedInUserAndRedirect() {
+  setLoggedInUserAndRedirect(ele) {
+    this.starWarService.loggedInUser = ele;
     this.starWarService.setLoginStatus(true);
     alert('Logged In');
   }
@@ -77,9 +78,9 @@ export class LoginComponent implements OnInit {
     this.starWarService.logOut();
   }
   getloggedInUser() {
-  return this.loggedInUser;
-}
+    return this.loggedInUser;
+  }
   gotToSearchScreen() {
-  this.router.navigate(['search']);
-}
+    this.router.navigate(['search']);
+  }
 }

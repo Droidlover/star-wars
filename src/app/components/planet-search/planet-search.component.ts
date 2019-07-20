@@ -1,3 +1,4 @@
+import { Constants } from './../../constants/Constants';
 import { StarWarsService } from './../../services/star-wars.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -56,15 +57,6 @@ export class PlanetSearchComponent implements OnInit {
 
     });
 
-    // this.filteredPlanets = this.filteredPlanets.sort((a, b) => {
-    //   if (+a.diameter < +b.diameter) {
-    //     return +1;
-    //   } else if (+a.diameter > +b.diameter) {
-    //     return -1;
-    //   } else if (+a.diameter === +b.diameter) {
-    //     return 0;
-    //   }
-    // });
     console.log(this.filteredPlanets);
     const flatArray = this.filteredPlanets.map((row) => row.population);
 
@@ -77,10 +69,16 @@ export class PlanetSearchComponent implements OnInit {
   }
 
   search() {
-    if (this.planets.length < 1) {
-      this.getPlanets();
+    ++this.starWarService.numOfSearched;
+    if (this.starWarService.numOfSearched <= Constants.searchLimit.limit ||
+      this.starWarService.loggedInUser.name === Constants.privilagedUser.name) {
+      if (this.planets.length < 1) {
+        this.getPlanets();
+      } else {
+        this.getFilteredPlanets();
+      }
     } else {
-      this.getFilteredPlanets();
+      alert('Max search Consumed');
     }
   }
 
